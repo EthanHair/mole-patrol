@@ -13,7 +13,7 @@ body {
 .background {
     width: 100%;
     height: 100%;
-    background-image: url("whack-a-mole-background-2048.png");
+    background-image: url("images/whack-a-mole-background-2048.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -64,7 +64,7 @@ body {
     display: block;
     height: 160px;
     width: 160px;
-    background-image: url("whack-a-mole-mole-spritesheet-160.png");
+    background-image: url("images/whack-a-mole-mole-spritesheet-160.png");
     background-position: 0 -160px;
 }
 
