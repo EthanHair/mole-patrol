@@ -83,3 +83,11 @@ body {
 .space-evenly {
     justify-content: space-evenly;
 }
+
+.d-none {
+    display: none;
+}
+
+.clickable {
+    cursor: pointer;
+}

@@ -10,37 +10,47 @@
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     </head>
     <body class="center row">
+        <div id="start-screen" class="pixel-words column pos-abs">
+            Welcome to Mole Patrol!
+            <br>
+            <span class="clickable" onclick="StartGame()">Start Game</span>
+        </div>
         <div class="background center space-evenly">
-            <div class="column pixel-words center pos-abs left">
+            <div id="left" class="column pixel-words center pos-abs left d-none">
                 <img src="images/heart-48.png" alt="Heart Pixel Art"></img>
-                <span id="life">3</span>
+                <span id="life">5</span>
             </div>
-            <div class="column six-hun-square pos-abs">
+            <div id="holes-area" class="column six-hun-square pos-abs d-none">
                 <div class="row width-100 space-between">
-                    <div id="0" class="hole" onclick="ClickedHole(0)"></div>
-                    <div id="1" class="hole" onclick="ClickedHole(1)"></div>
-                    <div id="2" class="hole" onclick="ClickedHole(2)"></div>
+                    <div id="0" class="hole clickable" onclick="ClickedHole(0)"></div>
+                    <div id="1" class="hole clickable" onclick="ClickedHole(1)"></div>
+                    <div id="2" class="hole clickable" onclick="ClickedHole(2)"></div>
                 </div>
                 <div class="row width-100 space-between">
-                    <div id="3" class="hole" onclick="ClickedHole(3)"></div>
-                    <div id="4" class="hole" onclick="ClickedHole(4)"></div>
-                    <div id="5" class="hole" onclick="ClickedHole(5)"></div>
+                    <div id="3" class="hole clickable" onclick="ClickedHole(3)"></div>
+                    <div id="4" class="hole clickable" onclick="ClickedHole(4)"></div>
+                    <div id="5" class="hole clickable" onclick="ClickedHole(5)"></div>
                 </div>
                 <div class="row width-100 space-between">
-                    <div id="6" class="hole" onclick="ClickedHole(6)"></div>
-                    <div id="7" class="hole" onclick="ClickedHole(7)"></div>
-                    <div id="8" class="hole" onclick="ClickedHole(8)"></div>
+                    <div id="6" class="hole clickable" onclick="ClickedHole(6)"></div>
+                    <div id="7" class="hole clickable" onclick="ClickedHole(7)"></div>
+                    <div id="8" class="hole clickable" onclick="ClickedHole(8)"></div>
                 </div>
             </div>
-            <div class="column pixel-words center pos-abs right">
+            <div id="right" class="column pixel-words center pos-abs right d-none">
                 <span>Score:</span>
                 <span id="score">0</span>
             </div>
         </div>
-        <div class="pos-abs top pixel-words">
-            <span onclick="Slow()">Slow</span>&nbsp;
-            <span onclick="Medium()">Medium</span>&nbsp;
-            <span onclick="Fast()">Fast</span>&nbsp;
+        <div id="speeds" class="pos-abs top pixel-words d-none">
+            <span class="clickable" onclick="Slow()">Slow</span>&nbsp;
+            <span class="clickable" onclick="Medium()">Medium</span>&nbsp;
+            <span class="clickable" onclick="Fast()">Fast</span>&nbsp;
+        </div>
+        <div id="end-screen" class="pixel-words column pos-abs d-none">
+            Game Over!
+            <br>
+            <span class="clickable" onclick="RestartGame()">Restart</span>
         </div>
     </body>
     <script src="site.js"></script>
