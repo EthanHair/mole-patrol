@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="Author" content="Ethan Hair">
+        <meta name="Course" content="CIS 3623">
+        <title>Mole Patrol</title>
+        <link href="site.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    </head>
+    <body class="center row">
+        <div class="background center space-evenly">
+            <div class="column pixel-words center pos-abs left">
+                <img src="heart-48.png" alt="Heart Pixel Art"></img>
+                <span id="life">3</span>
+            </div>
+            <div class="column six-hun-square pos-abs">
+                <div class="row width-100 space-between">
+                    <div id="0" class="hole" onclick="ClickedHole(0)"></div>
+                    <div id="1" class="hole" onclick="ClickedHole(1)"></div>
+                    <div id="2" class="hole" onclick="ClickedHole(2)"></div>
+                </div>
+                <div class="row width-100 space-between">
+                    <div id="3" class="hole" onclick="ClickedHole(3)"></div>
+                    <div id="4" class="hole" onclick="ClickedHole(4)"></div>
+                    <div id="5" class="hole" onclick="ClickedHole(5)"></div>
+                </div>
+                <div class="row width-100 space-between">
+                    <div id="6" class="hole" onclick="ClickedHole(6)"></div>
+                    <div id="7" class="hole" onclick="ClickedHole(7)"></div>
+                    <div id="8" class="hole" onclick="ClickedHole(8)"></div>
+                </div>
+            </div>
+            <div class="column pixel-words center pos-abs right">
+                <span>Score:</span>
+                <span id="score">0</span>
+            </div>
+        </div>
+        <div class="pos-abs top pixel-words">
+            <span onclick="Slow()">Slow</span>&nbsp;
+            <span onclick="Medium()">Medium</span>&nbsp;
+            <span onclick="Fast()">Fast</span>&nbsp;
+        </div>
+    </body>
+    <script src="site.js"></script>
+</html>
