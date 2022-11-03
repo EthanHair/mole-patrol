@@ -96,7 +96,7 @@ function ShowMole(idx) {
     }
     else
     {
-        if (hardMode && molesTillBomb == 0)
+        if (hardMode && molesTillBomb <= 0)
         {
             hole.classList.remove("golden-mole");
             hole.classList.remove("mole");
