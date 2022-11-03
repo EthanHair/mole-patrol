@@ -9,6 +9,8 @@ const rightArea = document.getElementById("right");
 const speeds = document.getElementById("speeds");
 
 let isMoleInHole = [false, false, false, false, false, false, false, false, false];
+let isGoldenMoleInHole = [false, false, false, false, false, false, false, false, false];
+let isBombInHole = [false, false, false, false, false, false, false, false, false];
 let score = 0;
 let life = 5;
 
@@ -16,35 +18,59 @@ let waitTime = 2000;
 let moleSpawnTimer;
 let upTime = 750;
 
+let molesTillGolden = getRndInteger(10, 20);
+
+let hardMode = false;
+let molesTillBomb = getRndInteger(4, 8);
+
 function Slow() {
     upTime = 1000;
     waitTime = 2000;
+    hardMode = false;
 }
 
 function Medium() {
     upTime = 750;
     waitTime = 2000;
+    hardMode = false;
 }
 
 function Fast() {
     upTime = 500;
     waitTime = 1000;
+    hardMode = false;
 }
 
 function ClickedHole(idx) {
     if (isMoleInHole[idx])
     {
-        HideMole(idx);
-        score++;
+        if (isGoldenMoleInHole[idx])
+        {
+            score += 5;
+        }
+        else
+        {
+            score++;
+        }
         scoreElement.innerHTML = score;
+        HideMole(idx);
     }
     else
     {
-        if (life == 1)
+        if (isBombInHole[idx])
+        {
+            life -= 2;
+        }
+        else
+        {
+            life--;
+        }
+
+        if (life <= 0)
         {
             GameOver();
         }
-        life--;
+
         lifeElement.innerHTML = life;
     }
 }
@@ -52,27 +78,66 @@ function ClickedHole(idx) {
 function ShowMole(idx) {
     const hole = holes[idx];
 
-    if (!hole.classList.contains("show-mole"))
+    if (molesTillGolden == 0)
     {
-        hole.classList.add("show-mole");
-    }
+        hole.classList.remove("mole");
+        hole.classList.remove("bomb");
+        hole.classList.add("golden-mole");
 
-    isMoleInHole[idx] = true;
+        molesTillGolden = (hardMode) ? getRndInteger(15,25) : getRndInteger(10, 20);
+
+        isGoldenMoleInHole[idx] = true;
+        isMoleInHole[idx] = true;
+
+        if (hardMode)
+        {
+            molesTillBomb--
+        }
+    }
+    else
+    {
+        if (hardMode && molesTillBomb == 0)
+        {
+            hole.classList.remove("golden-mole");
+            hole.classList.remove("mole");
+            hole.classList.add("bomb");
+
+            molesTillBomb = getRndInteger(4,8);
+
+            isBombInHole[idx] = true;
+        }
+        else
+        {
+            hole.classList.remove("golden-mole");
+            hole.classList.remove("bomb");
+            hole.classList.add("mole");
+
+            if (hardMode)
+            {
+                molesTillBomb--
+            }
+
+            isMoleInHole[idx] = true;
+        }
+        
+        molesTillGolden--;
+    }    
 
     setTimeout(function() {
         HideMole(idx);
-    }, upTime);
+    }, (hardMode) ? getRndInteger(400,900) : upTime);
 }
 
 function HideMole(idx) {
     const hole = holes[idx];
 
-    if (hole.classList.contains("show-mole"))
-    {
-        hole.classList.remove("show-mole");
-    }
+    hole.classList.remove("golden-mole");
+    hole.classList.remove("mole");
+    hole.classList.remove("bomb");
 
     isMoleInHole[idx] = false;
+    isGoldenMoleInHole[idx] = false;
+    isBombInHole[idx] = false;
 }
 
 function showRandomMole() {
@@ -130,4 +195,10 @@ function GameOver() {
 function RestartGame() {
     HideElement(gameOver);
     StartGame();
+}
+
+function HardMode() {
+    Fast();
+
+    hardMode = true;
 }

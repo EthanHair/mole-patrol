@@ -65,11 +65,19 @@ body {
     height: 160px;
     width: 160px;
     background-image: url("images/whack-a-mole-mole-spritesheet-160.png");
-    background-position: 0 -160px;
+    background-position: 0 160px;
 }
 
-.show-mole {
+.mole {
+    background-position: 0 320px;
+}
+
+.bomb {
     background-position: 0 0;
+}
+
+.golden-mole {
+    background-position: 0 -160px;
 }
 
 .pixel-words {
