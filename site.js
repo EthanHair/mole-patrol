@@ -78,7 +78,7 @@ function ClickedHole(idx) {
 function ShowMole(idx) {
     const hole = holes[idx];
 
-    if (molesTillGolden == 0)
+    if (molesTillGolden <= 0)
     {
         hole.classList.remove("mole");
         hole.classList.remove("bomb");
