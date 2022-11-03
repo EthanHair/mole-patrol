@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta name="Author" content="Ethan Hair">
-        <meta name="Course" content="CIS 3623">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <title>Mole Patrol</title>
         <link href="site.css" rel="stylesheet" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
         </div>
         <div class="background center space-evenly">
             <div id="left" class="column pixel-words center pos-abs left d-none">
-                <img src="images/heart-48.png" alt="Heart Pixel Art"></img>
+                <img src="images/heart-48.png" alt="Heart Pixel Art" class="heart-img"></img>
                 <span id="life">5</span>
             </div>
             <div id="holes-area" class="column six-hun-square pos-abs d-none">
@@ -42,10 +42,10 @@
                 <span id="score">0</span>
             </div>
         </div>
-        <div id="speeds" class="pos-abs top pixel-words d-none">
+        <div id="speeds" class="pos-abs top pixel-words d-none speeds">
             <span class="clickable" onclick="Slow()">Slow</span>&nbsp;
             <span class="clickable" onclick="Medium()">Medium</span>&nbsp;
-            <span class="clickable" onclick="Fast()">Fast</span>&nbsp;
+            <span class="clickable" onclick="Fast()">Fast</span>
         </div>
         <div id="end-screen" class="pixel-words column pos-abs d-none">
             Game Over!

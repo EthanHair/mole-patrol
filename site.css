@@ -91,3 +91,95 @@ body {
 .clickable {
     cursor: pointer;
 }
+
+@media screen and (max-width: 420px) {
+
+    .left {
+        top: 128px;
+        font-size: 64px;
+        left: 43vw;
+    }
+
+    .right {
+        bottom: 170px;
+        font-size: 64px;
+        right: 33vw;
+    }
+
+    .six-hun-square {
+        top: 27vh;
+        width: 300px;
+        height: 300px;
+    }
+
+    .top {
+        top: 12px
+    }
+
+    .pixel-words {
+        font-size: large;
+    }
+
+    .speeds {
+        font-size: medium;
+        text-align: center;
+    }
+
+    .hole {
+        display: block;
+        height: 64px;
+        width: 64px;
+        background-image: url("images/whack-a-mole-mole-spritesheet-64.png");
+        background-position: 0 -64px;
+    }
+
+    .show-mole {
+        background-position: 0 0;
+    }
+}
+
+@media screen and (max-width: 500px) {
+
+    .left {
+        top: 80px;
+        font-size: 64px;
+        left: 43vw;
+    }
+
+    .right {
+        bottom: 70px;
+        font-size: 64px;
+        right: 33vw;
+    }
+
+    .six-hun-square {
+        top: 27vh;
+        width: 300px;
+        height: 300px;
+    }
+
+    .top {
+        top: 12px
+    }
+
+    .pixel-words {
+        font-size: large;
+    }
+
+    .speeds {
+        font-size: medium;
+        text-align: center;
+    }
+
+    .hole {
+        display: block;
+        height: 64px;
+        width: 64px;
+        background-image: url("images/whack-a-mole-mole-spritesheet-64.png");
+        background-position: 0 -64px;
+    }
+
+    .show-mole {
+        background-position: 0 0;
+    }
+}
