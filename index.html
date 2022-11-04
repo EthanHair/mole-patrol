@@ -13,9 +13,14 @@
         <div id="start-screen" class="pixel-words column pos-abs">
             Welcome to Mole Patrol!
             <br>
+            <span class="info-text">
+                Click on moles to get a point but if you click on an empty hole you lose a life. You can change how fast 
+                they move by clicking on the desired speed at the top. Or choose Hard-Mode for an added challenge
+            </span>
+            <br>
             <span class="clickable" onclick="StartGame()">Start Game</span>
         </div>
-        <div class="background center space-evenly">
+        <div id="background" class="background center space-evenly">
             <div id="left" class="column pixel-words center pos-abs left d-none">
                 <img src="images/heart-48.png" alt="Heart Pixel Art"></img>
                 <span id="life">5</span>
@@ -43,10 +48,10 @@
             </div>
         </div>
         <div id="speeds" class="pos-abs top pixel-words d-none">
-            <span class="clickable" onclick="Slow()">Slow</span>&nbsp;
-            <span class="clickable" onclick="Medium()">Medium</span>&nbsp;
-            <span class="clickable" onclick="Fast()">Fast</span>&nbsp;
-            <span class="clickable" onclick="HardMode()">Hard-Mode</span>
+            <span id="slow" class="clickable" onclick="Slow()">Slow</span>&nbsp;
+            <span id="medium" class="clickable" onclick="Medium()">Medium</span>&nbsp;
+            <span id="fast" class="clickable" onclick="Fast()">Fast</span>&nbsp;
+            <span id="hard-mode" class="clickable" onclick="HardMode()">Hard-Mode</span>
         </div>
         <div id="end-screen" class="pixel-words column pos-abs d-none">
             Game Over!

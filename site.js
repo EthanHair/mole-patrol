@@ -6,7 +6,12 @@ const gameOver = document.getElementById("end-screen");
 const leftArea = document.getElementById("left");
 const holesArea = document.getElementById("holes-area");
 const rightArea = document.getElementById("right");
+const bgArea = document.getElementById("background");
 const speeds = document.getElementById("speeds");
+const slowMode = document.getElementById("slow");
+const mediumMode = document.getElementById("medium");
+const fastMode = document.getElementById("fast");
+const hardModeSelector = document.getElementById("hard-mode");
 
 let isMoleInHole = [false, false, false, false, false, false, false, false, false];
 let isGoldenMoleInHole = [false, false, false, false, false, false, false, false, false];
@@ -23,22 +28,48 @@ let molesTillGolden = getRndInteger(10, 20);
 let hardMode = false;
 let molesTillBomb = getRndInteger(4, 8);
 
+let currentBackgroundFrame = 1;
+
 function Slow() {
     upTime = 1000;
     waitTime = 2000;
     hardMode = false;
+
+    score = 0;
+    scoreElement.innerHTML = score;
+
+    slowMode.classList.add("selected-mode");
+    mediumMode.classList.remove("selected-mode");
+    fastMode.classList.remove("selected-mode");
+    hardModeSelector.classList.remove("selected-mode");
 }
 
 function Medium() {
     upTime = 750;
     waitTime = 2000;
     hardMode = false;
+
+    score = 0;
+    scoreElement.innerHTML = score;
+
+    slowMode.classList.remove("selected-mode");
+    mediumMode.classList.add("selected-mode");
+    fastMode.classList.remove("selected-mode");
+    hardModeSelector.classList.remove("selected-mode");
 }
 
 function Fast() {
     upTime = 500;
     waitTime = 1000;
     hardMode = false;
+
+    score = 0;
+    scoreElement.innerHTML = score;
+
+    slowMode.classList.remove("selected-mode");
+    mediumMode.classList.remove("selected-mode");
+    fastMode.classList.add("selected-mode");
+    hardModeSelector.classList.remove("selected-mode");
 }
 
 function ClickedHole(idx) {
@@ -201,4 +232,54 @@ function HardMode() {
     Fast();
 
     hardMode = true;
+
+    score = 0;
+    scoreElement.innerHTML = score;
+
+    slowMode.classList.remove("selected-mode");
+    mediumMode.classList.remove("selected-mode");
+    fastMode.classList.remove("selected-mode");
+    hardModeSelector.classList.add("selected-mode");
 }
+
+function AnimateBackground() {
+    switch (currentBackgroundFrame)
+    {
+        case 1:
+            // set first frame
+            bgArea.classList.remove("background-frame2");
+            bgArea.classList.remove("background-frame3");
+            bgArea.classList.remove("background-frame4");
+            bgArea.classList.add("background-frame1");
+            currentBackgroundFrame = 2;
+            break;
+        case 2:
+            // set second frame
+            bgArea.classList.remove("background-frame1");
+            bgArea.classList.remove("background-frame3");
+            bgArea.classList.remove("background-frame4");
+            bgArea.classList.add("background-frame2");
+            currentBackgroundFrame = 3;
+            break;
+        case 3:
+            // set third frame
+            bgArea.classList.remove("background-frame1");
+            bgArea.classList.remove("background-frame2");
+            bgArea.classList.remove("background-frame4");
+            bgArea.classList.add("background-frame3");
+            currentBackgroundFrame = 4;
+            break;
+        case 4:
+            // set fourth frame
+            bgArea.classList.remove("background-frame1");
+            bgArea.classList.remove("background-frame2");
+            bgArea.classList.remove("background-frame3");
+            bgArea.classList.add("background-frame4");
+            currentBackgroundFrame = 1;
+            break;
+        default:
+            currentBackgroundFrame = 1;
+    }
+}
+
+setInterval(AnimateBackground, 1000);
