@@ -1,6 +1,10 @@
 body {
     height: 100vh;
     margin: 0;
+    background-image: url("images/whack-a-mole-background-2048-frame1.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .center {
@@ -13,10 +17,26 @@ body {
 .background {
     width: 100%;
     height: 100%;
-    background-image: url("images/whack-a-mole-background-2048.png");
+    background-image: url("images/whack-a-mole-background-2048-frame1.png");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center;
+}
+
+.background-frame1 {
+    background-image: url("images/whack-a-mole-background-2048-frame1.png");
+}
+
+.background-frame2 {
+    background-image: url("images/whack-a-mole-background-2048-frame2.png");
+}
+
+.background-frame3 {
+    background-image: url("images/whack-a-mole-background-2048-frame3.png");
+}
+
+.background-frame4 {
+    background-image: url("images/whack-a-mole-background-2048-frame4.png");
 }
 
 .column {
@@ -86,6 +106,12 @@ body {
     font-size: xx-large;
     color: white;
     gap: 8px;
+    text-shadow: 2px 2px black;
+}
+
+.info-text {
+    font-size: medium;
+    max-width: 700px;
 }
 
 .space-evenly {
@@ -98,4 +124,8 @@ body {
 
 .clickable {
     cursor: pointer;
+}
+
+.selected-mode {
+    text-decoration: underline;
 }
