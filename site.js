@@ -35,8 +35,10 @@ function Slow() {
     waitTime = 2000;
     hardMode = false;
 
+    life = 5;
     score = 0;
     scoreElement.innerHTML = score;
+    lifeElement.innerHTML = life;
 
     slowMode.classList.add("selected-mode");
     mediumMode.classList.remove("selected-mode");
@@ -49,8 +51,10 @@ function Medium() {
     waitTime = 2000;
     hardMode = false;
 
+    life = 5;
     score = 0;
     scoreElement.innerHTML = score;
+    lifeElement.innerHTML = life;
 
     slowMode.classList.remove("selected-mode");
     mediumMode.classList.add("selected-mode");
@@ -63,8 +67,10 @@ function Fast() {
     waitTime = 1000;
     hardMode = false;
 
+    life = 5;
     score = 0;
     scoreElement.innerHTML = score;
+    lifeElement.innerHTML = life;
 
     slowMode.classList.remove("selected-mode");
     mediumMode.classList.remove("selected-mode");
@@ -233,8 +239,10 @@ function HardMode() {
 
     hardMode = true;
 
+    life = 5;
     score = 0;
     scoreElement.innerHTML = score;
+    lifeElement.innerHTML = life;
 
     slowMode.classList.remove("selected-mode");
     mediumMode.classList.remove("selected-mode");
