@@ -30,6 +30,8 @@ let molesTillBomb = getRndInteger(4, 8);
 
 let currentBackgroundFrame = 1;
 
+let started = false;
+
 function Slow() {
     upTime = 1000;
     waitTime = 2000;
@@ -217,6 +219,8 @@ function StartGame() {
 
     showRandomMole();
     Medium();
+
+    started = true;
 }
 
 function GameOver() {
@@ -227,6 +231,8 @@ function GameOver() {
     HideElement(speeds);
 
     clearTimeout(moleSpawnTimer);
+
+    started = false;
 }
 
 function RestartGame() {
@@ -291,3 +297,47 @@ function AnimateBackground() {
 }
 
 setInterval(AnimateBackground, 1000);
+
+// Numpad support
+
+window.onkeydown= function(x){
+    if (started)
+    {
+        if(x.key == 1)
+        {
+            ClickedHole(6);
+        }
+        if(x.key == 2)
+        {
+            ClickedHole(7);
+        }
+        if(x.key == 3)
+        {
+            ClickedHole(8);
+        }
+        if(x.key == 4)
+        {
+            ClickedHole(3);
+        }
+        if(x.key == 5)
+        {
+            ClickedHole(4);
+        }
+        if(x.key == 6)
+        {
+            ClickedHole(5);
+        }
+        if(x.key == 7)
+        {
+            ClickedHole(0);
+        }
+        if(x.key == 8)
+        {
+            ClickedHole(1);
+        }
+        if(x.key == 9)
+        {
+            ClickedHole(2);
+        }
+    }
+};
