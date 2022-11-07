@@ -9,12 +9,12 @@ const gameOver = document.getElementById("end-screen");
 const leftArea = document.getElementById("left");
 const holesArea = document.getElementById("holes-area");
 const rightArea = document.getElementById("right");
-const bgArea = document.getElementById("background");
 const speeds = document.getElementById("speeds");
 const slowMode = document.getElementById("slow");
 const mediumMode = document.getElementById("medium");
 const fastMode = document.getElementById("fast");
 const hardModeSelector = document.getElementById("hard-mode");
+const leaderboardLink = document.getElementById("leaderboard-link");
 
 //#endregion
 
@@ -32,7 +32,6 @@ let upTime = 750;
 let molesTillGolden = getRndInteger(10, 20);
 let hardMode = false;
 let molesTillBomb = getRndInteger(4, 8);
-let currentBackgroundFrame = 1;
 let started = false;
 
 //#endregion
@@ -210,27 +209,10 @@ function showRandomMole() {
     moleSpawnTimer = setTimeout(showRandomMole, waitTime);
 }
 
-function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min) ) + min;
-}
-
-function ShowElement(element) {
-    if (element.classList.contains("d-none"))
-    {
-        element.classList.remove("d-none");
-    }
-}
-
-function HideElement(element) {
-    if (!element.classList.contains("d-none"))
-    {
-        element.classList.add("d-none");
-    }
-}
-
 // Game state functions
 function StartGame() {
     HideElement(gameStart);
+    HideElement(leaderboardLink);
     ShowElement(leftArea);
     ShowElement(holesArea);
     ShowElement(rightArea);
@@ -263,49 +245,6 @@ function RestartGame() {
     HideElement(gameOver);
     StartGame();
 }
-
-// Animations
-function AnimateBackground() {
-    switch (currentBackgroundFrame)
-    {
-        case 1:
-            // set first frame
-            bgArea.classList.remove("background-frame2");
-            bgArea.classList.remove("background-frame3");
-            bgArea.classList.remove("background-frame4");
-            bgArea.classList.add("background-frame1");
-            currentBackgroundFrame = 2;
-            break;
-        case 2:
-            // set second frame
-            bgArea.classList.remove("background-frame1");
-            bgArea.classList.remove("background-frame3");
-            bgArea.classList.remove("background-frame4");
-            bgArea.classList.add("background-frame2");
-            currentBackgroundFrame = 3;
-            break;
-        case 3:
-            // set third frame
-            bgArea.classList.remove("background-frame1");
-            bgArea.classList.remove("background-frame2");
-            bgArea.classList.remove("background-frame4");
-            bgArea.classList.add("background-frame3");
-            currentBackgroundFrame = 4;
-            break;
-        case 4:
-            // set fourth frame
-            bgArea.classList.remove("background-frame1");
-            bgArea.classList.remove("background-frame2");
-            bgArea.classList.remove("background-frame3");
-            bgArea.classList.add("background-frame4");
-            currentBackgroundFrame = 1;
-            break;
-        default:
-            currentBackgroundFrame = 1;
-    }
-}
-
-setInterval(AnimateBackground, 1000);
 
 // Numpad support
 window.onkeydown= function(x){

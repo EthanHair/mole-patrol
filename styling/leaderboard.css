@@ -1,0 +1,27 @@
+.title {
+    width: 100%;
+    text-decoration: underline;
+    font-size: xx-large;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.leaderboard {
+    margin: 24px;
+}
+
+.header {
+ text-decoration: underline;
+}
+
+.entry {
+    font-size: large;
+}
+
+.header-section {
+    
+}
+
+tr {
+    border-bottom: 1px solid lightgray;
+}
