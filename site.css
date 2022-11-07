@@ -112,6 +112,7 @@ body {
 .info-text {
     font-size: medium;
     max-width: 700px;
+    line-height: 20px;
 }
 
 .space-evenly {
