@@ -1,3 +1,6 @@
+// Getting the elements
+//#region
+
 const holes = document.getElementsByClassName("hole");
 const scoreElement = document.getElementById("score");
 const lifeElement = document.getElementById("life");
@@ -13,25 +16,28 @@ const mediumMode = document.getElementById("medium");
 const fastMode = document.getElementById("fast");
 const hardModeSelector = document.getElementById("hard-mode");
 
+//#endregion
+
+// Properties
+//#region
+
 let isMoleInHole = [false, false, false, false, false, false, false, false, false];
 let isGoldenMoleInHole = [false, false, false, false, false, false, false, false, false];
 let isBombInHole = [false, false, false, false, false, false, false, false, false];
 let score = 0;
 let life = 5;
-
 let waitTime = 2000;
 let moleSpawnTimer;
 let upTime = 750;
-
 let molesTillGolden = getRndInteger(10, 20);
-
 let hardMode = false;
 let molesTillBomb = getRndInteger(4, 8);
-
 let currentBackgroundFrame = 1;
-
 let started = false;
 
+//#endregion
+
+// Game Modes
 function Slow() {
     upTime = 1000;
     waitTime = 2000;
@@ -80,6 +86,23 @@ function Fast() {
     hardModeSelector.classList.remove("selected-mode");
 }
 
+function HardMode() {
+    Fast();
+
+    hardMode = true;
+
+    life = 5;
+    score = 0;
+    scoreElement.innerHTML = score;
+    lifeElement.innerHTML = life;
+
+    slowMode.classList.remove("selected-mode");
+    mediumMode.classList.remove("selected-mode");
+    fastMode.classList.remove("selected-mode");
+    hardModeSelector.classList.add("selected-mode");
+}
+
+// Main functions for functionality
 function ClickedHole(idx) {
     if (isMoleInHole[idx])
     {
@@ -205,6 +228,7 @@ function HideElement(element) {
     }
 }
 
+// Game state functions
 function StartGame() {
     HideElement(gameStart);
     ShowElement(leftArea);
@@ -240,22 +264,7 @@ function RestartGame() {
     StartGame();
 }
 
-function HardMode() {
-    Fast();
-
-    hardMode = true;
-
-    life = 5;
-    score = 0;
-    scoreElement.innerHTML = score;
-    lifeElement.innerHTML = life;
-
-    slowMode.classList.remove("selected-mode");
-    mediumMode.classList.remove("selected-mode");
-    fastMode.classList.remove("selected-mode");
-    hardModeSelector.classList.add("selected-mode");
-}
-
+// Animations
 function AnimateBackground() {
     switch (currentBackgroundFrame)
     {
@@ -299,7 +308,6 @@ function AnimateBackground() {
 setInterval(AnimateBackground, 1000);
 
 // Numpad support
-
 window.onkeydown= function(x){
     if (started)
     {
