@@ -58,21 +58,33 @@ async function GetLeaderboard(requestMode) {
 
     let text = "";
 
-    const response = await fetch('http://localhost:7071/api/GetLeaderboard', {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    })
+    let response;
+
+    try 
+    {
+        response = await fetch('http://localhost:7071/api/GetLeaderboard', {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+    } 
+    catch (error) 
+    {
+        console.error(error);
+        
+        ShowElement(leaderboardUnavailable);
+        HideElement(leaderboardBody);
+
+        return;
+    }
 
     scores = await response.json();
 
     if (!response.ok)
     {
-        console.error(text);
-        
         ShowElement(leaderboardUnavailable);
         HideElement(leaderboardBody);
 
