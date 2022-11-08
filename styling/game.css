@@ -34,11 +34,23 @@
 }
 
 .bomb {
-    background-position: 0 0;
+    background-position: 0 640px;
 }
 
 .golden-mole {
-    background-position: 0 -160px;
+    background-position: 0 480px;
+}
+
+.mole-hit {
+    background-position: 0 960px;
+}
+
+.golden-mole-hit {
+    background-position: 0 800px;
+}
+
+.explosion {
+    background-position: 0 0;
 }
 
 .selected-mode {
