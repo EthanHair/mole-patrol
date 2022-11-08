@@ -30,6 +30,7 @@ let score = 0;
 let life = 5;
 let waitTime = 2000;
 let moleSpawnTimer;
+let moleHideTimer;
 let upTime = 750;
 let molesTillGolden = getRndInteger(10, 20);
 let hardMode = false;
@@ -116,22 +117,27 @@ function HardMode() {
 function ClickedHole(idx) {
     if (isMoleInHole[idx])
     {
+        clearInterval(moleHideTimer);
+
         if (isGoldenMoleInHole[idx])
         {
             score += 5;
+            ClickedGoldenMole(idx);
         }
         else
         {
             score++;
+            ClickedMole(idx);
         }
         scoreElement.innerHTML = score;
-        HideMole(idx);
     }
     else
     {
         if (isBombInHole[idx])
         {
+            clearInterval(moleHideTimer);
             life -= 2;
+            BlowBomb(idx);
         }
         else
         {
@@ -195,9 +201,9 @@ function ShowMole(idx) {
         molesTillGolden--;
     }    
 
-    setTimeout(function() {
-        HideMole(idx);
-    }, (hardMode) ? getRndInteger(400,900) : upTime);
+    moleHideTimer = setTimeout(function() {
+                        HideMole(idx);
+                    }, (hardMode) ? getRndInteger(400,900) : upTime);
 }
 
 function HideMole(idx) {
@@ -206,6 +212,9 @@ function HideMole(idx) {
     hole.classList.remove("golden-mole");
     hole.classList.remove("mole");
     hole.classList.remove("bomb");
+    hole.classList.remove("mole-hit");
+    hole.classList.remove("golden-mole-hit");
+    hole.classList.remove("explosion");
 
     isMoleInHole[idx] = false;
     isGoldenMoleInHole[idx] = false;
@@ -218,6 +227,47 @@ function showRandomMole() {
     ShowMole(idx);
 
     moleSpawnTimer = setTimeout(showRandomMole, waitTime);
+}
+
+function ClickedMole(idx) {
+    const hole = holes[idx];
+
+    hole.classList.remove("mole");
+    hole.classList.remove("bomb");
+    hole.classList.remove("golden-mole");
+    hole.classList.add("mole-hit");
+
+    setTimeout(function() {
+        HideMole(idx);
+    }, 300);
+}
+
+function ClickedGoldenMole(idx) {
+    const hole = holes[idx];
+
+    hole.classList.remove("mole");
+    hole.classList.remove("bomb");
+    hole.classList.remove("golden-mole");
+    hole.classList.remove("explosion");
+    hole.classList.add("golden-mole-hit");
+
+    setTimeout(function() {
+        HideMole(idx);
+    }, 300);
+}
+
+function BlowBomb(idx) {
+    const hole = holes[idx];
+
+    hole.classList.remove("mole");
+    hole.classList.remove("bomb");
+    hole.classList.remove("golden-mole");
+    hole.classList.remove("golden-mole-hit");
+    hole.classList.add("explosion");
+
+    setTimeout(function() {
+        HideMole(idx);
+    }, 300);
 }
 
 // Game state functions
