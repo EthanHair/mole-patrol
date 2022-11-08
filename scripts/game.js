@@ -1,3 +1,6 @@
+// Getting the elements
+//#region
+
 const holes = document.getElementsByClassName("hole");
 const scoreElement = document.getElementById("score");
 const lifeElement = document.getElementById("life");
@@ -6,36 +9,43 @@ const gameOver = document.getElementById("end-screen");
 const leftArea = document.getElementById("left");
 const holesArea = document.getElementById("holes-area");
 const rightArea = document.getElementById("right");
-const bgArea = document.getElementById("background");
 const speeds = document.getElementById("speeds");
 const slowMode = document.getElementById("slow");
 const mediumMode = document.getElementById("medium");
 const fastMode = document.getElementById("fast");
 const hardModeSelector = document.getElementById("hard-mode");
+const leaderboardLink = document.getElementById("leaderboard-link");
+const nameInput = document.getElementById("name-input");
+
+
+//#endregion
+
+// Properties
+//#region
 
 let isMoleInHole = [false, false, false, false, false, false, false, false, false];
 let isGoldenMoleInHole = [false, false, false, false, false, false, false, false, false];
 let isBombInHole = [false, false, false, false, false, false, false, false, false];
 let score = 0;
 let life = 5;
-
 let waitTime = 2000;
 let moleSpawnTimer;
 let upTime = 750;
-
 let molesTillGolden = getRndInteger(10, 20);
-
 let hardMode = false;
 let molesTillBomb = getRndInteger(4, 8);
-
-let currentBackgroundFrame = 1;
-
 let started = false;
+let selectedMode = "Medium";
 
+//#endregion
+
+// Game Modes
 function Slow() {
     upTime = 1000;
     waitTime = 2000;
     hardMode = false;
+
+    selectedMode = "Slow";
 
     life = 5;
     score = 0;
@@ -53,6 +63,8 @@ function Medium() {
     waitTime = 2000;
     hardMode = false;
 
+    selectedMode = "Medium";
+
     life = 5;
     score = 0;
     scoreElement.innerHTML = score;
@@ -69,6 +81,8 @@ function Fast() {
     waitTime = 1000;
     hardMode = false;
 
+    selectedMode = "Fast";
+
     life = 5;
     score = 0;
     scoreElement.innerHTML = score;
@@ -80,6 +94,25 @@ function Fast() {
     hardModeSelector.classList.remove("selected-mode");
 }
 
+function HardMode() {
+    Fast();
+
+    hardMode = true;
+
+    selectedMode = "Hard";
+
+    life = 5;
+    score = 0;
+    scoreElement.innerHTML = score;
+    lifeElement.innerHTML = life;
+
+    slowMode.classList.remove("selected-mode");
+    mediumMode.classList.remove("selected-mode");
+    fastMode.classList.remove("selected-mode");
+    hardModeSelector.classList.add("selected-mode");
+}
+
+// Main functions for functionality
 function ClickedHole(idx) {
     if (isMoleInHole[idx])
     {
@@ -187,26 +220,10 @@ function showRandomMole() {
     moleSpawnTimer = setTimeout(showRandomMole, waitTime);
 }
 
-function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min) ) + min;
-}
-
-function ShowElement(element) {
-    if (element.classList.contains("d-none"))
-    {
-        element.classList.remove("d-none");
-    }
-}
-
-function HideElement(element) {
-    if (!element.classList.contains("d-none"))
-    {
-        element.classList.add("d-none");
-    }
-}
-
+// Game state functions
 function StartGame() {
     HideElement(gameStart);
+    HideElement(leaderboardLink);
     ShowElement(leftArea);
     ShowElement(holesArea);
     ShowElement(rightArea);
@@ -229,6 +246,7 @@ function GameOver() {
     HideElement(holesArea);
     HideElement(rightArea);
     HideElement(speeds);
+    ShowElement(leaderboardLink);
 
     clearTimeout(moleSpawnTimer);
 
@@ -237,69 +255,11 @@ function GameOver() {
 
 function RestartGame() {
     HideElement(gameOver);
+    HideElement(leaderboardLink);
     StartGame();
 }
 
-function HardMode() {
-    Fast();
-
-    hardMode = true;
-
-    life = 5;
-    score = 0;
-    scoreElement.innerHTML = score;
-    lifeElement.innerHTML = life;
-
-    slowMode.classList.remove("selected-mode");
-    mediumMode.classList.remove("selected-mode");
-    fastMode.classList.remove("selected-mode");
-    hardModeSelector.classList.add("selected-mode");
-}
-
-function AnimateBackground() {
-    switch (currentBackgroundFrame)
-    {
-        case 1:
-            // set first frame
-            bgArea.classList.remove("background-frame2");
-            bgArea.classList.remove("background-frame3");
-            bgArea.classList.remove("background-frame4");
-            bgArea.classList.add("background-frame1");
-            currentBackgroundFrame = 2;
-            break;
-        case 2:
-            // set second frame
-            bgArea.classList.remove("background-frame1");
-            bgArea.classList.remove("background-frame3");
-            bgArea.classList.remove("background-frame4");
-            bgArea.classList.add("background-frame2");
-            currentBackgroundFrame = 3;
-            break;
-        case 3:
-            // set third frame
-            bgArea.classList.remove("background-frame1");
-            bgArea.classList.remove("background-frame2");
-            bgArea.classList.remove("background-frame4");
-            bgArea.classList.add("background-frame3");
-            currentBackgroundFrame = 4;
-            break;
-        case 4:
-            // set fourth frame
-            bgArea.classList.remove("background-frame1");
-            bgArea.classList.remove("background-frame2");
-            bgArea.classList.remove("background-frame3");
-            bgArea.classList.add("background-frame4");
-            currentBackgroundFrame = 1;
-            break;
-        default:
-            currentBackgroundFrame = 1;
-    }
-}
-
-setInterval(AnimateBackground, 1000);
-
 // Numpad support
-
 window.onkeydown= function(x){
     if (started)
     {
@@ -341,3 +301,25 @@ window.onkeydown= function(x){
         }
     }
 };
+
+// Sumbit Score
+async function SubmitScore() {
+    const scoreToAdd = {name: nameInput.value, score: score, mode: selectedMode};
+
+    const response = await fetch('http://localhost:7071/api/AddScore', {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(scoreToAdd)
+    })
+
+    if (!response.ok)
+    {
+        console.error(text);
+        return;
+    }
+
+    window.location.href = "leaderboard.html";
+}

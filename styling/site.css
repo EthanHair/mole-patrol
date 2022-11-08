@@ -1,7 +1,7 @@
 body {
     height: 100vh;
     margin: 0;
-    background-image: url("images/whack-a-mole-background-2048-frame1.png");
+    background-image: url("../images/whack-a-mole-background-2048-frame1.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -17,49 +17,31 @@ body {
 .background {
     width: 100%;
     height: 100%;
-    background-image: url("images/whack-a-mole-background-2048-frame1.png");
+    background-image: url("../images/whack-a-mole-background-2048-frame1.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .background-frame1 {
-    background-image: url("images/whack-a-mole-background-2048-frame1.png");
+    background-image: url("../images/whack-a-mole-background-2048-frame1.png");
 }
 
 .background-frame2 {
-    background-image: url("images/whack-a-mole-background-2048-frame2.png");
+    background-image: url("../images/whack-a-mole-background-2048-frame2.png");
 }
 
 .background-frame3 {
-    background-image: url("images/whack-a-mole-background-2048-frame3.png");
+    background-image: url("../images/whack-a-mole-background-2048-frame3.png");
 }
 
 .background-frame4 {
-    background-image: url("images/whack-a-mole-background-2048-frame4.png");
+    background-image: url("../images/whack-a-mole-background-2048-frame4.png");
 }
 
 .column {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-}
-
-.six-hun-square {
-    width: 600px;
-    height: 600px;
-}
-
-.pos-abs {
-    position: absolute;
-}
-
-.left {
-    left: 224px;
-}
-
-.right {
-    right: 128px;
 }
 
 .row {
@@ -67,9 +49,8 @@ body {
     flex-direction: row;
 }
 
-.top {
-    top: 0;
-    padding: 8px;
+.pos-abs {
+    position: absolute;
 }
 
 .space-between {
@@ -78,26 +59,6 @@ body {
 
 .width-100 {
     width: 100%;
-}
-
-.hole {
-    display: block;
-    height: 160px;
-    width: 160px;
-    background-image: url("images/whack-a-mole-mole-spritesheet-160.png");
-    background-position: 0 160px;
-}
-
-.mole {
-    background-position: 0 320px;
-}
-
-.bomb {
-    background-position: 0 0;
-}
-
-.golden-mole {
-    background-position: 0 -160px;
 }
 
 .pixel-words {
@@ -119,6 +80,15 @@ body {
     justify-content: space-evenly;
 }
 
+.justify-start {
+    justify-content: start;
+}
+
+.justify-center {
+    justify-content: center;
+    display: flex;
+}
+
 .d-none {
     display: none;
 }
@@ -127,6 +97,25 @@ body {
     cursor: pointer;
 }
 
-.selected-mode {
-    text-decoration: underline;
+.text-input {
+    width: 100px;
+    height: 30px;
+    font-size: large;
+}
+
+.button {
+    width: 175px;
+    height: 40px;
+    font-size: small;
+}
+
+.input {
+    border-style: solid;
+    border-radius: 16px;
+    background-color: #469420;
+    font-family: 'PRESS START 2P';
+    padding: 4px;
+    color: white;
+    text-align: center;
+    border: 2px solid #28600C;
 }

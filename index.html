@@ -2,14 +2,15 @@
 <html lang="en">
     <head>
         <meta name="Author" content="Ethan Hair">
-        <meta name="Course" content="CIS 3623">
         <title>Mole Patrol</title>
-        <link href="site.css" rel="stylesheet" />
+        <link href="styling/site.css" rel="stylesheet" />
+        <link href="styling/game.css" rel="stylesheet" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     </head>
     <body class="center row">
+        <a id="leaderboard-link" class="pixel-words clickable pos-abs top" href="leaderboard.html">Leaderboard</a>
         <div id="start-screen" class="pixel-words column pos-abs">
             Welcome to Mole Patrol!
             <br>
@@ -25,7 +26,7 @@
                 <img src="images/heart-48.png" alt="Heart Pixel Art"></img>
                 <span id="life">5</span>
             </div>
-            <div id="holes-area" class="column six-hun-square pos-abs d-none">
+            <div id="holes-area" class="column six-hun-square pos-abs d-none space-between">
                 <div class="row width-100 space-between">
                     <div id="0" class="hole clickable" onclick="ClickedHole(0)"></div>
                     <div id="1" class="hole clickable" onclick="ClickedHole(1)"></div>
@@ -56,8 +57,17 @@
         <div id="end-screen" class="pixel-words column pos-abs d-none">
             Game Over!
             <br>
+            <span class="info-text">
+                Enter your name below to save your<br>score and go to the leaderboard
+            </span>
+            <div class="width-100 justify-center">
+                <input class="input text-input" type="text" title="Name" id="name-input" maxlength="5">             
+                <input class="input button clickable" type="button" value="Submit Score" onclick="SubmitScore()">          
+            </div>
+            <br>
             <span class="clickable" onclick="RestartGame()">Restart</span>
         </div>
     </body>
-    <script src="site.js"></script>
+    <script src="scripts/site.js"></script>
+    <script src="scripts/game.js"></script>
 </html>

@@ -1,0 +1,41 @@
+.title {
+    width: 100%;
+    text-decoration: underline;
+    font-size: xx-large;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.leaderboard {
+    margin: 24px;
+    max-width: 80%;
+}
+
+.header {
+    text-decoration: underline;
+}
+
+.entry {
+    font-size: large;
+    margin: 8px;
+}
+
+tr {
+    border-bottom: 1px solid lightgray;
+}
+
+.selected-mode {
+    text-decoration: underline;
+}
+
+div, tr {
+    margin: 8px;
+}
+
+.back-link {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    text-decoration: underline;
+    font-size: medium;
+}

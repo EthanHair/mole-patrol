@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="Author" content="Ethan Hair">
+        <title>Mole Patrol Leaderboard</title>
+        <link href="styling/site.css" rel="stylesheet" />
+        <link href="styling/leaderboard.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    </head>
+    <body class="center row">
+        <a class="back-link pixel-words clickable" href="index.html">Back</a>
+        <div id="background" class="background center justify-start column">
+            <div class="title pixel-words">Leaderboard</div>
+            <div id="modes" class="pixel-words">
+                <span id="slow" class="clickable selected-mode" onclick="Slow()">Slow</span>&nbsp;
+                <span id="medium" class="clickable" onclick="Medium()">Medium</span>&nbsp;
+                <span id="fast" class="clickable" onclick="Fast()">Fast</span>&nbsp;
+                <span id="hard-mode" class="clickable" onclick="HardMode()">Hard-Mode</span>
+            </div>
+            <div class="leaderboard width-100">
+                <div id="body" class="row pixel-words space-evenly">
+                    <div class="column">
+                        <div class="header">Name</div>
+                        <div id="name-loc">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="header">Score</div>
+                        <div id="score-loc">
+                        </div>
+                    </div>
+                </div>
+                <div id="unavailable" class="pixel-words d-none">Leaderboard Currently Unavailable</div>
+            </div>
+        </div>
+    </body>
+    <script src="scripts/site.js"></script>
+    <script src="scripts/leaderboard.js"></script>
+</html>
