@@ -26,7 +26,7 @@
                 <img src="images/heart-48.png" alt="Heart Pixel Art"></img>
                 <span id="life">5</span>
             </div>
-            <div id="holes-area" class="column six-hun-square pos-abs d-none">
+            <div id="holes-area" class="column six-hun-square pos-abs d-none space-between">
                 <div class="row width-100 space-between">
                     <div id="0" class="hole clickable" onclick="ClickedHole(0)"></div>
                     <div id="1" class="hole clickable" onclick="ClickedHole(1)"></div>
@@ -56,6 +56,14 @@
         </div>
         <div id="end-screen" class="pixel-words column pos-abs d-none">
             Game Over!
+            <br>
+            <span class="info-text">
+                Enter your name below to save your<br>score and go to the leaderboard
+            </span>
+            <div class="width-100 justify-center">
+                <input class="input text-input" type="text" title="Name" id="name-input" maxlength="5">             
+                <input class="input button clickable" type="button" value="Submit Score" onclick="SubmitScore()">          
+            </div>
             <br>
             <span class="clickable" onclick="RestartGame()">Restart</span>
         </div>

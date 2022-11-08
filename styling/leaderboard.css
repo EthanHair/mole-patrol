@@ -8,20 +8,34 @@
 
 .leaderboard {
     margin: 24px;
+    max-width: 80%;
 }
 
 .header {
- text-decoration: underline;
+    text-decoration: underline;
 }
 
 .entry {
     font-size: large;
-}
-
-.header-section {
-    
+    margin: 8px;
 }
 
 tr {
     border-bottom: 1px solid lightgray;
+}
+
+.selected-mode {
+    text-decoration: underline;
+}
+
+div, tr {
+    margin: 8px;
+}
+
+.back-link {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    text-decoration: underline;
+    font-size: medium;
 }

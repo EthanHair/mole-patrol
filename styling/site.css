@@ -42,7 +42,11 @@ body {
 .column {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
 }
 
 .pos-abs {
@@ -80,10 +84,38 @@ body {
     justify-content: start;
 }
 
+.justify-center {
+    justify-content: center;
+    display: flex;
+}
+
 .d-none {
     display: none;
 }
 
 .clickable {
     cursor: pointer;
+}
+
+.text-input {
+    width: 100px;
+    height: 30px;
+    font-size: large;
+}
+
+.button {
+    width: 175px;
+    height: 40px;
+    font-size: small;
+}
+
+.input {
+    border-style: solid;
+    border-radius: 16px;
+    background-color: #469420;
+    font-family: 'PRESS START 2P';
+    padding: 4px;
+    color: white;
+    text-align: center;
+    border: 2px solid #28600C;
 }

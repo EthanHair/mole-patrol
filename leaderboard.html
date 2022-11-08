@@ -10,24 +10,30 @@
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     </head>
     <body class="center row">
+        <a class="back-link pixel-words clickable" href="index.html">Back</a>
         <div id="background" class="background center justify-start column">
             <div class="title pixel-words">Leaderboard</div>
-            <table class="leaderboard width-100">
-                <thead class="header-section">
-                    <tr class="space-evenly pixel-words header">
-                        <th>Name</th>
-                        <th>Score</th>
-                        <th>Mode</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody">
-                    <tr class="space-evenly pixel-words entry">
-                        <td>Dummy</td>
-                        <td>Data</td>
-                        <td>Here</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div id="modes" class="pixel-words">
+                <span id="slow" class="clickable selected-mode" onclick="Slow()">Slow</span>&nbsp;
+                <span id="medium" class="clickable" onclick="Medium()">Medium</span>&nbsp;
+                <span id="fast" class="clickable" onclick="Fast()">Fast</span>&nbsp;
+                <span id="hard-mode" class="clickable" onclick="HardMode()">Hard-Mode</span>
+            </div>
+            <div class="leaderboard width-100">
+                <div id="body" class="row pixel-words space-evenly">
+                    <div class="column">
+                        <div class="header">Name</div>
+                        <div id="name-loc">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="header">Score</div>
+                        <div id="score-loc">
+                        </div>
+                    </div>
+                </div>
+                <div id="unavailable" class="pixel-words d-none">Leaderboard Currently Unavailable</div>
+            </div>
         </div>
     </body>
     <script src="scripts/site.js"></script>

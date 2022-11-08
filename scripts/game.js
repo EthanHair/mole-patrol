@@ -15,6 +15,8 @@ const mediumMode = document.getElementById("medium");
 const fastMode = document.getElementById("fast");
 const hardModeSelector = document.getElementById("hard-mode");
 const leaderboardLink = document.getElementById("leaderboard-link");
+const nameInput = document.getElementById("name-input");
+
 
 //#endregion
 
@@ -33,6 +35,7 @@ let molesTillGolden = getRndInteger(10, 20);
 let hardMode = false;
 let molesTillBomb = getRndInteger(4, 8);
 let started = false;
+let selectedMode = "Medium";
 
 //#endregion
 
@@ -41,6 +44,8 @@ function Slow() {
     upTime = 1000;
     waitTime = 2000;
     hardMode = false;
+
+    selectedMode = "Slow";
 
     life = 5;
     score = 0;
@@ -58,6 +63,8 @@ function Medium() {
     waitTime = 2000;
     hardMode = false;
 
+    selectedMode = "Medium";
+
     life = 5;
     score = 0;
     scoreElement.innerHTML = score;
@@ -74,6 +81,8 @@ function Fast() {
     waitTime = 1000;
     hardMode = false;
 
+    selectedMode = "Fast";
+
     life = 5;
     score = 0;
     scoreElement.innerHTML = score;
@@ -89,6 +98,8 @@ function HardMode() {
     Fast();
 
     hardMode = true;
+
+    selectedMode = "Hard";
 
     life = 5;
     score = 0;
@@ -235,6 +246,7 @@ function GameOver() {
     HideElement(holesArea);
     HideElement(rightArea);
     HideElement(speeds);
+    ShowElement(leaderboardLink);
 
     clearTimeout(moleSpawnTimer);
 
@@ -243,6 +255,7 @@ function GameOver() {
 
 function RestartGame() {
     HideElement(gameOver);
+    HideElement(leaderboardLink);
     StartGame();
 }
 
@@ -288,3 +301,25 @@ window.onkeydown= function(x){
         }
     }
 };
+
+// Sumbit Score
+async function SubmitScore() {
+    const scoreToAdd = {name: nameInput.value, score: score, mode: selectedMode};
+
+    const response = await fetch('http://localhost:7071/api/AddScore', {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(scoreToAdd)
+    })
+
+    if (!response.ok)
+    {
+        console.error(text);
+        return;
+    }
+
+    window.location.href = "leaderboard.html";
+}
