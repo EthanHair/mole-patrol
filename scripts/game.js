@@ -356,7 +356,7 @@ window.onkeydown= function(x){
 async function SubmitScore() {
     const scoreToAdd = {name: nameInput.value, score: score, mode: selectedMode};
 
-    const response = await fetch('http://localhost:7071/api/AddScore', {
+    const response = await fetch('https://molepatrolapi.azurewebsites.net/AddScore', {
         method: "POST",
         headers: {
             'Accept': 'application/json',
