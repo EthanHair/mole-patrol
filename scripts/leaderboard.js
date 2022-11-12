@@ -51,7 +51,7 @@ function HardMode() {
 }
 
 async function GetLeaderboard(requestMode) {
-    const payload = {name: "", mode: requestMode};
+    const payload = {name: "", mode: requestMode, number: 15};
 
     HideElement(leaderboardUnavailable);
     ShowElement(leaderboardBody);
@@ -62,7 +62,7 @@ async function GetLeaderboard(requestMode) {
 
     try 
     {
-        response = await fetch('http://localhost:7071/api/GetLeaderboard', {
+        response = await fetch('https://molepatrolapi.azurewebsites.net/GetLeaderboard', {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
