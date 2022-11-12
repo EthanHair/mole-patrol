@@ -7,3 +7,5 @@ Moles will randomly pop up in a hole and then disappear. If you can click on the
 You can play it here: https://ethanhair.github.io/mole-patrol/
 
 All pixel art is original content created with Piskel and the pixel font is Press Start 2P from Google Fonts (https://fonts.google.com/specimen/Press+Start+2P?query=press+start)
+
+I am using an Azure Function and Blob Storage for the Leaderboard. The repo for that is https://github.com/EthanHair/mole-patrol-api
