@@ -62,7 +62,7 @@ async function GetLeaderboard(requestMode) {
 
     try 
     {
-        response = await fetch('https://molepatrolapi.azurewebsites.net/GetLeaderboard', {
+        response = await fetch('https://molepatrolapi.azurewebsites.net/api/GetLeaderboard', {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
