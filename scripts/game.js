@@ -16,6 +16,8 @@ const fastMode = document.getElementById("fast");
 const hardModeSelector = document.getElementById("hard-mode");
 const leaderboardLink = document.getElementById("leaderboard-link");
 const nameInput = document.getElementById("name-input");
+const hammerMouse = document.getElementById("hammer-mouse");
+const startButton = document.getElementById("start-button");
 
 
 //#endregion
@@ -278,6 +280,7 @@ function StartGame() {
     ShowElement(holesArea);
     ShowElement(rightArea);
     ShowElement(speeds);
+    ShowElement(hammerMouse);
 
     score = 0;
     scoreElement.innerHTML = score;
@@ -297,6 +300,7 @@ function GameOver() {
     HideElement(rightArea);
     HideElement(speeds);
     ShowElement(leaderboardLink);
+    HideElement(hammerMouse);
 
     clearTimeout(moleSpawnTimer);
 
@@ -310,43 +314,52 @@ function RestartGame() {
 }
 
 // Numpad support
-window.onkeydown= function(x){
+window.onkeydown = function(x){
     if (started)
     {
         if(x.key == 1)
         {
+            HitMoleNumPad(6);
             ClickedHole(6);
         }
         if(x.key == 2)
         {
+            HitMoleNumPad(7);
             ClickedHole(7);
         }
         if(x.key == 3)
         {
+            HitMoleNumPad(8);
             ClickedHole(8);
         }
         if(x.key == 4)
         {
+            HitMoleNumPad(3);
             ClickedHole(3);
         }
         if(x.key == 5)
         {
+            HitMoleNumPad(4);
             ClickedHole(4);
         }
         if(x.key == 6)
         {
+            HitMoleNumPad(5);
             ClickedHole(5);
         }
         if(x.key == 7)
         {
+            HitMoleNumPad(0);
             ClickedHole(0);
         }
         if(x.key == 8)
         {
+            HitMoleNumPad(1);
             ClickedHole(1);
         }
         if(x.key == 9)
         {
+            HitMoleNumPad(2);
             ClickedHole(2);
         }
     }
@@ -372,4 +385,70 @@ async function SubmitScore() {
     }
 
     window.location.href = "leaderboard.html";
+}
+
+// Make the hammer follow the mouse
+const animation = "0.25s 1 normal whack";
+
+window.addEventListener("click", function(e) {
+    if (started) {
+        CheckHolesClick(e.clientX, e.clientY);
+    }
+	hammerMouse.style.animation = animation;
+    setTimeout(function() {
+        hammerMouse.style.animation = "";
+    }, 250);
+});
+
+const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
+
+window.addEventListener("mousemove", function(e) {
+    let holesAreaRect = holesArea.getBoundingClientRect();
+    let minX = holesAreaRect.x - 64;
+    let maxX = minX + holesAreaRect.width + 64;
+    let minY = holesAreaRect.y;
+    let maxY = minY + holesAreaRect.height;
+	hammerMouse.style.left = `${clamp(e.clientX - 50, minX, maxX)}px`;
+    hammerMouse.style.top = `${clamp(e.clientY - 50, minY, maxY)}px`;
+});
+
+// Check holes click
+function CheckHolesClick(x, y) {
+    for (let i = 0; i < holes.length; i++) {
+        if (IsClickInHole(x, y, holes[i])) {
+            ClickedHole(i);
+            return
+        }
+    }
+}
+
+function IsClickInHole(x, y, hole){
+    let holeRect = hole.getBoundingClientRect();
+    
+    let holeMinX = holeRect.x;
+    let holeMaxX = holeMinX + holeRect.width;
+    let holeMinY = holeRect.y;
+    let holeMaxY = holeMinY + holeRect.height;
+
+    if (x >= holeMinX && x <= holeMaxX && y >= holeMinY && y <= holeMaxY) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Connecting the hammer to the numpad
+function HitMoleNumPad(idx) {
+    let holeRect = holes[idx].getBoundingClientRect();
+
+    let holeMidishX = holeRect.x + (holeRect.width/4);
+    let holeY = holeRect.y;
+    
+	hammerMouse.style.left = `${holeMidishX}px`;
+    hammerMouse.style.top = `${holeY}px`;
+    
+	hammerMouse.style.animation = animation;
+    setTimeout(function() {
+        hammerMouse.style.animation = "";
+    }, 250);
 }
