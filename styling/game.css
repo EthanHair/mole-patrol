@@ -60,3 +60,29 @@
 #leaderboard-link {
     font-size: large;
 }
+
+#holes-area {
+    cursor: none;
+}
+
+#hammer-mouse {
+    background-image: url("../images/hammer-128.png");
+    height: 128px;
+    width: 128px;
+    position: absolute;
+    cursor: none;
+}
+
+@keyframes whack {
+    0% {
+        rotate: 0deg;
+    }
+
+    50% {
+        rotate: -45deg;
+    }
+    
+    100% {
+        rotate: 0deg;
+    }
+}
