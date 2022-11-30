@@ -205,7 +205,7 @@ function ShowMole(idx) {
 
     moleHideTimer = setTimeout(function() {
                         HideMole(idx);
-                    }, (hardMode) ? getRndInteger(400,900) : upTime);
+                    }, (hardMode) ? getRndInteger(400 / GetTimeMultiplier(),900 / GetTimeMultiplier()) : upTime);
 }
 
 function HideMole(idx) {
@@ -228,7 +228,7 @@ function showRandomMole() {
 
     ShowMole(idx);
 
-    moleSpawnTimer = setTimeout(showRandomMole, waitTime);
+    moleSpawnTimer = setTimeout(showRandomMole, (hardMode) ? getRndInteger(800 / GetTimeMultiplier(),1000 / GetTimeMultiplier()) : waitTime);
 }
 
 function ClickedMole(idx) {
@@ -451,4 +451,15 @@ function HitMoleNumPad(idx) {
     setTimeout(function() {
         hammerMouse.style.animation = "";
     }, 250);
+}
+
+// Increasing the difficulty as the score increases
+function RoundDownToNearestMult(number, mult) {
+    let quo = Math.floor(number/mult);
+    let multipleOfMult = mult * quo;
+    return multipleOfMult;
+}
+
+function GetTimeMultiplier() {
+    return 0.01 * RoundDownToNearestMult(score, 20) + 1
 }
