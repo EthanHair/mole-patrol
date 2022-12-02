@@ -314,7 +314,7 @@ function RestartGame() {
 }
 
 // Numpad support
-window.onkeydown = function(x){
+window.addEventListener("keydown", x => {
     if (started)
     {
         if(x.key == 1)
@@ -363,7 +363,7 @@ window.onkeydown = function(x){
             ClickedHole(2);
         }
     }
-};
+});
 
 // Sumbit Score
 async function SubmitScore() {
