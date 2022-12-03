@@ -53,6 +53,16 @@ body {
     position: absolute;
 }
 
+.top {
+    top: 0;
+    padding: 8px;
+}
+
+.bottom {
+    bottom: 0;
+    padding: 8px;
+}
+
 .space-between {
     justify-content: space-between;
 }
@@ -118,4 +128,47 @@ body {
     color: white;
     text-align: center;
     border: 2px solid #28600C;
+}
+
+.home-link {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    text-decoration: underline;
+    font-size: medium;
+}
+
+#leaderboard-link, #info-link {
+    font-size: large;
+}
+
+.link {
+    color: white;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+a:visited {
+    color: white;
+}
+
+audio {
+    display: none;
+}
+
+.right-corner {
+    top: 0;
+    right: 0;
+    padding: 16px;
+}
+
+.vol-btns {
+    color: white;
+    font-size: 24px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
 }

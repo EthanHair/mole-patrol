@@ -8,9 +8,18 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/fa2ab9e600.js" crossorigin="anonymous"></script>
     </head>
     <body class="center row">
-        <a id="leaderboard-link" class="pixel-words clickable pos-abs top" href="leaderboard.html">Leaderboard</a>
+        <div id="nav-links" class="pixel-words pos-abs top">
+            <a id="leaderboard-link" class="link clickable" href="leaderboard.html">Leaderboard</a>
+            <a id="info-link" class="link clickable" href="info.html">More Info</a>
+        </div>
+        <div id="volume-control" class="pos-abs right-corner vol-btns">
+            <i id="sound-effects" class="fa-solid fa-volume clickable" onclick="ToggleSE()"></i>
+            <i id="music" class="fa-solid fa-music-slash clickable" onclick="ToggleMusic()"></i>
+        </div>
+        <a id="home-btn" class="home-link pixel-words clickable d-none" href="index.html">Home</a>
         <div id="start-screen" class="pixel-words column pos-abs">
             Welcome to Mole Patrol!
             <br>

@@ -14,11 +14,12 @@ const slowMode = document.getElementById("slow");
 const mediumMode = document.getElementById("medium");
 const fastMode = document.getElementById("fast");
 const hardModeSelector = document.getElementById("hard-mode");
-const leaderboardLink = document.getElementById("leaderboard-link");
+const navLinks = document.getElementById("nav-links");
 const nameInput = document.getElementById("name-input");
 const hammerMouse = document.getElementById("hammer-mouse");
 const startButton = document.getElementById("start-button");
-
+const whackSE = new Audio("audio/whack.wav");
+const homeBtn = document.getElementById("home-btn");
 
 //#endregion
 
@@ -232,6 +233,8 @@ function showRandomMole() {
 }
 
 function ClickedMole(idx) {
+    PlayWhackSE();
+    
     const hole = holes[idx];
 
     hole.classList.remove("mole");
@@ -245,6 +248,8 @@ function ClickedMole(idx) {
 }
 
 function ClickedGoldenMole(idx) {
+    PlayWhackSE();
+    
     const hole = holes[idx];
 
     hole.classList.remove("mole");
@@ -275,8 +280,9 @@ function BlowBomb(idx) {
 // Game state functions
 function StartGame() {
     HideElement(gameStart);
-    HideElement(leaderboardLink);
+    HideElement(navLinks);
     ShowElement(leftArea);
+    ShowElement(homeBtn);
     ShowElement(holesArea);
     ShowElement(rightArea);
     ShowElement(speeds);
@@ -299,7 +305,7 @@ function GameOver() {
     HideElement(holesArea);
     HideElement(rightArea);
     HideElement(speeds);
-    ShowElement(leaderboardLink);
+    ShowElement(navLinks);
     HideElement(hammerMouse);
 
     clearTimeout(moleSpawnTimer);
@@ -309,7 +315,7 @@ function GameOver() {
 
 function RestartGame() {
     HideElement(gameOver);
-    HideElement(leaderboardLink);
+    HideElement(navLinks);
     StartGame();
 }
 
@@ -462,4 +468,11 @@ function RoundDownToNearestMult(number, mult) {
 
 function GetTimeMultiplier() {
     return 0.01 * RoundDownToNearestMult(score, 20) + 1
+}
+
+// Audio
+function PlayWhackSE() {
+    if (!soundEffectsMuted) {
+        whackSE.play();
+    }
 }
