@@ -2,6 +2,11 @@
 //#region
 
 const bgArea = document.getElementById("background");
+const bgMusic = new Audio("audio/background-music.wav");
+const menuSE = new Audio("audio/menu-press.wav");
+const menuButtons = document.getElementsByClassName("clickable");
+const musicBtn = document.getElementById("music");
+const SEBtn = document.getElementById("sound-effects");
 
 //#endregion
 
@@ -9,6 +14,8 @@ const bgArea = document.getElementById("background");
 //#region
 
 let currentBackgroundFrame = 1;
+let soundEffectsMuted = false;
+let musicPlaying = false;
 
 //#endregion
 
@@ -74,3 +81,45 @@ function AnimateBackground() {
 }
 
 setInterval(AnimateBackground, 1000);
+
+// Audio
+function PlayMenuSE() {
+    if (!soundEffectsMuted) {
+        menuSE.play();
+    }
+}
+
+function ToggleSE() {
+    soundEffectsMuted = !soundEffectsMuted;
+
+    if (soundEffectsMuted) {
+        SEBtn.classList.remove("fa-volume");
+        SEBtn.classList.add("fa-volume-slash");
+    } else {
+        SEBtn.classList.add("fa-volume");
+        SEBtn.classList.remove("fa-volume-slash");
+    }
+}
+
+function ToggleMusic() {
+    musicPlaying = !musicPlaying;
+
+    if (!musicPlaying) {
+        bgMusic.pause();
+        musicBtn.classList.remove("fa-music");
+        musicBtn.classList.add("fa-music-slash");
+    } else {
+        bgMusic.play();
+        musicBtn.classList.add("fa-music");
+        musicBtn.classList.remove("fa-music-slash");
+    }
+}
+
+for (btn of menuButtons) {
+    btn.addEventListener("click", () => {
+        PlayMenuSE();
+    });
+}
+
+bgMusic.loop = true;
+bgMusic.autoplay = true;

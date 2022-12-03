@@ -11,16 +11,6 @@
     right: 128px;
 }
 
-.row {
-    display: flex;
-    flex-direction: row;
-}
-
-.top {
-    top: 0;
-    padding: 8px;
-}
-
 .hole {
     display: block;
     height: 160px;
@@ -55,10 +45,6 @@
 
 .selected-mode {
     text-decoration: underline;
-}
-
-#leaderboard-link {
-    font-size: large;
 }
 
 #holes-area {

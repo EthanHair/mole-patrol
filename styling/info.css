@@ -1,0 +1,32 @@
+.title {
+    width: 100%;
+    text-decoration: underline;
+    font-size: xx-large;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.section {
+    max-width: 40vw;
+}
+
+.section-header {
+    text-decoration: underline;
+    font-size: x-large;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.section-item {
+    font-size: large;
+    text-align: start;
+    line-height: 24px;
+}
+
+li {
+    margin-bottom: 12px;
+}
+
+ul {
+    list-style: url("../images/bullet-point.png");
+}

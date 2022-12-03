@@ -31,11 +31,3 @@ tr {
 div, tr {
     margin: 8px;
 }
-
-.back-link {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    text-decoration: underline;
-    font-size: medium;
-}

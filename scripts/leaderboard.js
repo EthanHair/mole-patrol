@@ -100,4 +100,4 @@ async function GetLeaderboard(requestMode) {
     });
 }
 
-Slow();
+HardMode();
