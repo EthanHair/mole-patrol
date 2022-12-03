@@ -102,16 +102,16 @@ function ToggleSE() {
 }
 
 function ToggleMusic() {
-    musicPlaying = !musicPlaying;
-
-    if (!musicPlaying) {
+    if (musicPlaying) {
         bgMusic.pause();
         musicBtn.classList.remove("fa-music");
         musicBtn.classList.add("fa-music-slash");
+        musicPlaying = false;
     } else {
         bgMusic.play();
         musicBtn.classList.add("fa-music");
         musicBtn.classList.remove("fa-music-slash");
+        musicPlaying = true;
     }
 }
 
