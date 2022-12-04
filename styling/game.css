@@ -61,14 +61,12 @@
 
 @keyframes whack {
     0% {
-        rotate: 0deg;
-    }
-
-    50% {
         rotate: -45deg;
+        scale: 1.4;
     }
     
     100% {
         rotate: 0deg;
+        scale: 1;
     }
 }

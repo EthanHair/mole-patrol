@@ -18,8 +18,12 @@ const navLinks = document.getElementById("nav-links");
 const nameInput = document.getElementById("name-input");
 const hammerMouse = document.getElementById("hammer-mouse");
 const startButton = document.getElementById("start-button");
-const whackSE = new Audio("audio/whack.wav");
 const homeBtn = document.getElementById("home-btn");
+const whackSE = new Audio("audio/whack.wav");
+const jumpSE1 = new Audio("audio/jump1.wav");
+const jumpSE2 = new Audio("audio/jump2.wav");
+const jumpSE3 = new Audio("audio/jump3.wav");
+const jumpSE4 = new Audio("audio/jump4.wav");
 
 //#endregion
 
@@ -169,6 +173,7 @@ function ShowMole(idx) {
 
         isGoldenMoleInHole[idx] = true;
         isMoleInHole[idx] = true;
+        PlayRndJumpSE();
 
         if (hardMode)
         {
@@ -199,6 +204,7 @@ function ShowMole(idx) {
             }
 
             isMoleInHole[idx] = true;
+            PlayRndJumpSE();
         }
         
         molesTillGolden--;
@@ -399,23 +405,28 @@ const animation = "0.25s 1 normal whack";
 window.addEventListener("click", function(e) {
     if (started) {
         CheckHolesClick(e.clientX, e.clientY);
+
+        if (IsInHolesArea(e.clientX, e.clientY)) {
+            hammerMouse.style.animation = animation;
+            setTimeout(function() {
+                hammerMouse.style.animation = "";
+            }, 250);
+        }
     }
-	hammerMouse.style.animation = animation;
-    setTimeout(function() {
-        hammerMouse.style.animation = "";
-    }, 250);
 });
 
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 window.addEventListener("mousemove", function(e) {
-    let holesAreaRect = holesArea.getBoundingClientRect();
-    let minX = holesAreaRect.x - 64;
-    let maxX = minX + holesAreaRect.width + 64;
-    let minY = holesAreaRect.y;
-    let maxY = minY + holesAreaRect.height;
-	hammerMouse.style.left = `${clamp(e.clientX - 50, minX, maxX)}px`;
-    hammerMouse.style.top = `${clamp(e.clientY - 50, minY, maxY)}px`;
+    if (IsInHolesArea(e.clientX, e.clientY)) {
+        let holesAreaRect = holesArea.getBoundingClientRect();
+        let minX = holesAreaRect.x - 64;
+        let maxX = minX + holesAreaRect.width + 64;
+        let minY = holesAreaRect.y;
+        let maxY = minY + holesAreaRect.height;
+        hammerMouse.style.left = `${clamp(e.clientX - 50, minX, maxX)}px`;
+        hammerMouse.style.top = `${clamp(e.clientY - 50, minY, maxY)}px`;
+    }
 });
 
 // Check holes click
@@ -437,6 +448,21 @@ function IsClickInHole(x, y, hole){
     let holeMaxY = holeMinY + holeRect.height;
 
     if (x >= holeMinX && x <= holeMaxX && y >= holeMinY && y <= holeMaxY) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function IsInHolesArea(x, y) {
+    let holeAreaRect = holesArea.getBoundingClientRect();
+    
+    let holesMinX = holeAreaRect.x;
+    let holesMaxX = holesMinX + holeAreaRect.width;
+    let holesMinY = holeAreaRect.y;
+    let holesMaxY = holesMinY + holeAreaRect.height;
+
+    if (x >= holesMinX && x <= holesMaxX && y >= holesMinY && y <= holesMaxY) {
         return true;
     } else {
         return false;
@@ -475,4 +501,57 @@ function PlayWhackSE() {
     if (!soundEffectsMuted) {
         whackSE.play();
     }
+}
+
+function PlayJumpSE1() {
+    if (!soundEffectsMuted) {
+        jumpSE1.play();
+    }
+}
+
+function PlayJumpSE2() {
+    if (!soundEffectsMuted) {
+        jumpSE2.play();
+    }
+}
+
+function PlayJumpSE3() {
+    if (!soundEffectsMuted) {
+        jumpSE3.play();
+    }
+}
+
+function PlayJumpSE4() {
+    if (!soundEffectsMuted) {
+        jumpSE4.play();
+    }
+}
+
+let prevJumpIdx = null;
+function PlayRndJumpSE() {
+    let idx = getRndInteger(1,5);
+
+    while (idx == prevJumpIdx) {
+        idx = getRndInteger(1,5);
+    }
+
+    switch (idx)
+    {
+        case 1:
+            PlayJumpSE1();
+            break;
+        case 2:
+            PlayJumpSE2();
+            break;
+        case 3:
+            PlayJumpSE3();
+            break;
+        case 4:
+            PlayJumpSE4();
+            break;
+        default:
+            PlayJumpSE1();
+    }
+
+    prevJumpIdx = idx;
 }
