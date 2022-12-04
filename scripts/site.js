@@ -122,4 +122,3 @@ for (btn of menuButtons) {
 }
 
 bgMusic.loop = true;
-bgMusic.autoplay = true;
