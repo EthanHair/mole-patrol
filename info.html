@@ -9,9 +9,14 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/fa2ab9e600.js" crossorigin="anonymous"></script>
     </head>
     <body class="center row">
         <a class="home-link pixel-words clickable" href="index.html">Home</a>
+        <div id="volume-control" class="pos-abs right-corner vol-btns">
+            <i id="sound-effects" class="fa-solid fa-volume clickable" onclick="ToggleSE()"></i>
+            <i id="music" class="fa-solid fa-music-slash clickable" onclick="ToggleMusic()"></i>
+        </div>
         <div id="background" class="background center justify-start column">
             <div class="title pixel-words">More Info</div>
             <div class="row space-evenly pixel-words">
