@@ -3,6 +3,7 @@
 
 const holes = document.getElementsByClassName("hole");
 const scoreElement = document.getElementById("score");
+const endScoreElement = document.getElementById("end-score");
 const lifeElement = document.getElementById("life");
 const gameStart = document.getElementById("start-screen");
 const gameOver = document.getElementById("end-screen");
@@ -140,6 +141,7 @@ function ClickedHole(idx) {
             ClickedMole(idx);
         }
         scoreElement.innerHTML = score;
+        endScoreElement.innerHTML = score;
     }
     else
     {
