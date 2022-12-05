@@ -1,10 +1,16 @@
 body {
+    overflow-x: hidden;
+    overflow-y: auto;
     height: 100vh;
     margin: 0;
     background-image: url("../images/whack-a-mole-background-2048-frame1.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+body::-webkit-scrollbar {
+    width: 0;
 }
 
 .center {
@@ -171,4 +177,24 @@ audio {
     display: flex;
     flex-direction: row;
     gap: 8px;
+}
+
+.scrollable {
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* need to also explicitly set the height (i.e. height: 70vh;) */
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 12px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+    background: #469420;           /* color of the tracking area */
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background-color: #28600C;     /* color of the scroll thumb */
+    border-radius: 24px;             /* roundness of the scroll thumb */
+    border: 3px solid #469420;     /* creates padding around scroll thumb */
 }

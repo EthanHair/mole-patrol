@@ -29,4 +29,5 @@ li {
 
 ul {
     list-style: url("../images/bullet-point.png");
+    height: 75vh;
 }

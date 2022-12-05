@@ -24,6 +24,9 @@ const jumpSE1 = new Audio("audio/jump1.wav");
 const jumpSE2 = new Audio("audio/jump2.wav");
 const jumpSE3 = new Audio("audio/jump3.wav");
 const jumpSE4 = new Audio("audio/jump4.wav");
+const explosionSE = new Audio("audio/bomb_explosion.wav");
+const missSE = new Audio("audio/miss.wav");
+const gameOverSE = new Audio("audio/GameOver.wav");
 
 //#endregion
 
@@ -149,6 +152,7 @@ function ClickedHole(idx) {
         else
         {
             life--;
+            PlayMissSE();
         }
 
         if (life <= 0)
@@ -270,6 +274,8 @@ function ClickedGoldenMole(idx) {
 }
 
 function BlowBomb(idx) {
+    PlayExplosionSE();
+
     const hole = holes[idx];
 
     hole.classList.remove("mole");
@@ -306,6 +312,8 @@ function StartGame() {
 }
 
 function GameOver() {
+    PlayGameOverSE();
+
     ShowElement(gameOver);
     HideElement(leftArea);
     HideElement(holesArea);
@@ -403,15 +411,13 @@ async function SubmitScore() {
 const animation = "0.25s 1 normal whack";
 
 window.addEventListener("click", function(e) {
-    if (started) {
+    if (started && IsInHolesArea(e.clientX, e.clientY)) {
         CheckHolesClick(e.clientX, e.clientY);
 
-        if (IsInHolesArea(e.clientX, e.clientY)) {
-            hammerMouse.style.animation = animation;
-            setTimeout(function() {
-                hammerMouse.style.animation = "";
-            }, 250);
-        }
+        hammerMouse.style.animation = animation;
+        setTimeout(function() {
+            hammerMouse.style.animation = "";
+        }, 250);
     }
 });
 
@@ -420,10 +426,12 @@ const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 window.addEventListener("mousemove", function(e) {
     if (IsInHolesArea(e.clientX, e.clientY)) {
         let holesAreaRect = holesArea.getBoundingClientRect();
+        let bgAreaRect = bgArea.getBoundingClientRect();
+        let hammerRect = hammerMouse.getBoundingClientRect();
         let minX = holesAreaRect.x - 64;
         let maxX = minX + holesAreaRect.width + 64;
         let minY = holesAreaRect.y;
-        let maxY = minY + holesAreaRect.height;
+        let maxY = bgAreaRect.y + bgAreaRect.height - hammerRect.height;
         hammerMouse.style.left = `${clamp(e.clientX - 50, minX, maxX)}px`;
         hammerMouse.style.top = `${clamp(e.clientY - 50, minY, maxY)}px`;
     }
@@ -431,11 +439,17 @@ window.addEventListener("mousemove", function(e) {
 
 // Check holes click
 function CheckHolesClick(x, y) {
+    let miss = true;
     for (let i = 0; i < holes.length; i++) {
         if (IsClickInHole(x, y, holes[i])) {
             ClickedHole(i);
+            miss = false;
             return
         }
+    }
+    
+    if (miss) {
+        PlayMissSE();
     }
 }
 
@@ -524,6 +538,24 @@ function PlayJumpSE3() {
 function PlayJumpSE4() {
     if (!soundEffectsMuted) {
         jumpSE4.play();
+    }
+}
+
+function PlayExplosionSE() {
+    if (!soundEffectsMuted) {
+        explosionSE.play();
+    }
+}
+
+function PlayMissSE() {
+    if (!soundEffectsMuted) {
+        missSE.play();
+    }
+}
+
+function PlayGameOverSE() {
+    if (!soundEffectsMuted) {
+        gameOverSE.play();
     }
 }
 
