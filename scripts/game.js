@@ -20,6 +20,8 @@ const nameInput = document.getElementById("name-input");
 const hammerMouse = document.getElementById("hammer-mouse");
 const startButton = document.getElementById("start-button");
 const homeBtn = document.getElementById("home-btn");
+const corkPowerUpIcon = document.getElementById("cork-icon");
+const goldenHammerPowerUpIcon = document.getElementById("golden-hammer-icon");
 const whackSE = new Audio("audio/whack.wav");
 const jumpSE1 = new Audio("audio/jump1.wav");
 const jumpSE2 = new Audio("audio/jump2.wav");
@@ -28,6 +30,8 @@ const jumpSE4 = new Audio("audio/jump4.wav");
 const explosionSE = new Audio("audio/bomb_explosion.wav");
 const missSE = new Audio("audio/miss.wav");
 const gameOverSE = new Audio("audio/GameOver.wav");
+const powerupSE = new Audio("audio/power-up.wav");
+const powerdownSE = new Audio("audio/power-down.wav");
 
 //#endregion
 
@@ -37,6 +41,9 @@ const gameOverSE = new Audio("audio/GameOver.wav");
 let isMoleInHole = [false, false, false, false, false, false, false, false, false];
 let isGoldenMoleInHole = [false, false, false, false, false, false, false, false, false];
 let isBombInHole = [false, false, false, false, false, false, false, false, false];
+let isCorkInHole = [false, false, false, false, false, false, false, false, false];
+let availableHoles = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+let isGoldenHammer = false;
 let score = 0;
 let life = 5;
 let waitTime = 2000;
@@ -48,6 +55,8 @@ let hardMode = false;
 let molesTillBomb = getRndInteger(4, 8);
 let started = false;
 let selectedMode = "Medium";
+let goldenMolesHit = 0;
+let activePowerup = false;
 
 //#endregion
 
@@ -125,49 +134,60 @@ function HardMode() {
 }
 
 // Main functions for functionality
-function ClickedHole(idx) {
-    if (isMoleInHole[idx])
-    {
-        clearInterval(moleHideTimer);
+function ClickedHole(idx, override = false) {
+    let canProcess = override ? true : !isGoldenHammer;
 
-        if (isGoldenMoleInHole[idx])
-        {
-            score += 5;
-            ClickedGoldenMole(idx);
-        }
-        else
-        {
-            score++;
-            ClickedMole(idx);
-        }
-        scoreElement.innerHTML = score;
-        endScoreElement.innerHTML = score;
-    }
-    else
-    {
-        if (isBombInHole[idx])
+    if (canProcess) {
+        if (isMoleInHole[idx])
         {
             clearInterval(moleHideTimer);
-            life -= 2;
-            BlowBomb(idx);
+
+            if (isGoldenMoleInHole[idx])
+            {
+                score += 5;
+                ClickedGoldenMole(idx);
+            }
+            else
+            {
+                score++;
+                ClickedMole(idx);
+            }
+            scoreElement.innerHTML = score;
+            endScoreElement.innerHTML = score;
         }
         else
         {
-            life--;
-            PlayMissSE();
+            if (!isCorkInHole[idx]) 
+            {
+                if (isBombInHole[idx])
+                {
+                    clearInterval(moleHideTimer);
+                    if (!isGoldenHammer) {
+                        life -= 2;
+                    }
+                    BlowBomb(idx);
+                }
+                else
+                {
+                    if (!isGoldenHammer) {
+                        life--;                        
+                    }
+                    PlayMissSE();
+                }
+            
+                if (life <= 0)
+                {
+                    GameOver();
+                }
+                lifeElement.innerHTML = life;
+            }
         }
-
-        if (life <= 0)
-        {
-            GameOver();
-        }
-
-        lifeElement.innerHTML = life;
     }
 }
 
 function ShowMole(idx) {
     const hole = holes[idx];
+    let addedMole = false;
 
     if (molesTillGolden <= 0)
     {
@@ -179,6 +199,7 @@ function ShowMole(idx) {
 
         isGoldenMoleInHole[idx] = true;
         isMoleInHole[idx] = true;
+        addedMole = true;
         PlayRndJumpSE();
 
         if (hardMode)
@@ -204,21 +225,30 @@ function ShowMole(idx) {
             hole.classList.remove("bomb");
             hole.classList.add("mole");
 
+            isMoleInHole[idx] = true;
+            addedMole = true;
+            PlayRndJumpSE();
+
             if (hardMode)
             {
                 molesTillBomb--
             }
-
-            isMoleInHole[idx] = true;
-            PlayRndJumpSE();
         }
         
         molesTillGolden--;
     }    
+    
+    let moleHideTime = (hardMode) ? getRndInteger(400 / GetTimeMultiplier(),900 / GetTimeMultiplier()) : upTime;
+
+    if (isGoldenHammer && addedMole) {
+        setTimeout(() => {
+            HitMoleNumPad(idx, true);
+        }, moleHideTime * 0.6);
+    }
 
     moleHideTimer = setTimeout(function() {
                         HideMole(idx);
-                    }, (hardMode) ? getRndInteger(400 / GetTimeMultiplier(),900 / GetTimeMultiplier()) : upTime);
+                    }, moleHideTime);
 }
 
 function HideMole(idx) {
@@ -237,9 +267,10 @@ function HideMole(idx) {
 }
 
 function showRandomMole() {
-    let idx = getRndInteger(0, 9);
+    let rndIdx = getRndInteger(0, availableHoles.length);
+    let holeIdx = availableHoles[rndIdx];
 
-    ShowMole(idx);
+    ShowMole(holeIdx);
 
     moleSpawnTimer = setTimeout(showRandomMole, (hardMode) ? getRndInteger(800 / GetTimeMultiplier(),1000 / GetTimeMultiplier()) : waitTime);
 }
@@ -263,12 +294,19 @@ function ClickedGoldenMole(idx) {
     PlayWhackSE();
     
     const hole = holes[idx];
+    if (!activePowerup) {
+        goldenMolesHit++;
+    }
 
     hole.classList.remove("mole");
     hole.classList.remove("bomb");
     hole.classList.remove("golden-mole");
     hole.classList.remove("explosion");
     hole.classList.add("golden-mole-hit");
+
+    if (goldenMolesHit >= 4) {
+        ActivateRndPowerup();
+    }
 
     setTimeout(function() {
         HideMole(idx);
@@ -342,50 +380,62 @@ window.addEventListener("keydown", x => {
         if(x.key == 1)
         {
             HitMoleNumPad(6);
-            ClickedHole(6);
         }
         if(x.key == 2)
         {
             HitMoleNumPad(7);
-            ClickedHole(7);
         }
         if(x.key == 3)
         {
             HitMoleNumPad(8);
-            ClickedHole(8);
         }
         if(x.key == 4)
         {
             HitMoleNumPad(3);
-            ClickedHole(3);
         }
         if(x.key == 5)
         {
             HitMoleNumPad(4);
-            ClickedHole(4);
         }
         if(x.key == 6)
         {
             HitMoleNumPad(5);
-            ClickedHole(5);
         }
         if(x.key == 7)
         {
             HitMoleNumPad(0);
-            ClickedHole(0);
         }
         if(x.key == 8)
         {
             HitMoleNumPad(1);
-            ClickedHole(1);
         }
         if(x.key == 9)
         {
             HitMoleNumPad(2);
-            ClickedHole(2);
         }
     }
 });
+
+function HitMoleNumPad(idx, override = false) {
+    let canProcess = override ? true : !isGoldenHammer;
+
+    if (canProcess) {
+        ClickedHole(idx, override);
+
+        let holeRect = holes[idx].getBoundingClientRect();
+
+        let holeMidishX = holeRect.x + (holeRect.width/4);
+        let holeY = holeRect.y;
+        
+	    hammerMouse.style.left = `${holeMidishX}px`;
+        hammerMouse.style.top = `${holeY}px`;
+        
+	    hammerMouse.style.animation = animation;
+        setTimeout(function() {
+            hammerMouse.style.animation = "";
+        }, 250);
+    }
+}
 
 // Sumbit Score
 async function SubmitScore() {
@@ -413,7 +463,7 @@ async function SubmitScore() {
 const animation = "0.25s 1 normal whack";
 
 window.addEventListener("click", function(e) {
-    if (started && IsInHolesArea(e.clientX, e.clientY)) {
+    if (started && IsInHolesArea(e.clientX, e.clientY) && !isGoldenHammer) {
         CheckHolesClick(e.clientX, e.clientY);
 
         hammerMouse.style.animation = animation;
@@ -426,7 +476,7 @@ window.addEventListener("click", function(e) {
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
 window.addEventListener("mousemove", function(e) {
-    if (IsInHolesArea(e.clientX, e.clientY)) {
+    if (IsInHolesArea(e.clientX, e.clientY) && !isGoldenHammer) {
         let holesAreaRect = holesArea.getBoundingClientRect();
         let bgAreaRect = bgArea.getBoundingClientRect();
         let hammerRect = hammerMouse.getBoundingClientRect();
@@ -483,22 +533,6 @@ function IsInHolesArea(x, y) {
     } else {
         return false;
     }
-}
-
-// Connecting the hammer to the numpad
-function HitMoleNumPad(idx) {
-    let holeRect = holes[idx].getBoundingClientRect();
-
-    let holeMidishX = holeRect.x + (holeRect.width/4);
-    let holeY = holeRect.y;
-    
-	hammerMouse.style.left = `${holeMidishX}px`;
-    hammerMouse.style.top = `${holeY}px`;
-    
-	hammerMouse.style.animation = animation;
-    setTimeout(function() {
-        hammerMouse.style.animation = "";
-    }, 250);
 }
 
 // Increasing the difficulty as the score increases
@@ -561,6 +595,18 @@ function PlayGameOverSE() {
     }
 }
 
+function PlayPowerupSE() {
+    if (!soundEffectsMuted) {
+        powerupSE.play();
+    }
+}
+
+function PlayPowerdownSE() {
+    if (!soundEffectsMuted) {
+        powerdownSE.play();
+    }
+}
+
 let prevJumpIdx = null;
 function PlayRndJumpSE() {
     let idx = getRndInteger(1,5);
@@ -588,4 +634,75 @@ function PlayRndJumpSE() {
     }
 
     prevJumpIdx = idx;
+}
+
+// PowerUps
+let corkPowerUp = function() {
+
+    const numberOfCorkedHoles = getRndInteger(4,8);
+    const corkedHoles = [];
+    while (corkedHoles.length < numberOfCorkedHoles) {
+        let rndIdx = getRndInteger(0, 9);
+        if (!corkedHoles.includes(rndIdx)) {
+            corkedHoles.push(rndIdx);
+        }
+    }
+
+    for (idx of corkedHoles) {
+        HideMole(idx);
+
+        holes[idx].classList.add("cork");
+
+        isCorkInHole[idx] = true;
+
+        availableHoles.splice(availableHoles.indexOf(idx), 1);
+    }
+
+    setTimeout(() => {
+        for (idx of corkedHoles) {
+            HideMole(idx);
+    
+            holes[idx].classList.remove("cork");
+    
+            isCorkInHole[idx] = false;
+        }
+
+        availableHoles = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+        DeactivatePowerup();
+    }, 10000);
+};
+
+let goldenHammerPowerUp = function() {
+    isGoldenHammer = true;
+    hammerMouse.classList.add("golden-hammer");
+
+    setTimeout(() => {
+        isGoldenHammer = false;
+        hammerMouse.classList.remove("golden-hammer");
+
+        DeactivatePowerup();
+    }, 10000);
+}
+
+const powerups = [{ icon: corkPowerUpIcon, activate: corkPowerUp }, 
+                  { icon: goldenHammerPowerUpIcon, activate: goldenHammerPowerUp }]
+
+function ActivateRndPowerup() {
+    const powerup = powerups[getRndInteger(0, powerups.length)];
+
+    activePowerup = true;
+    PlayPowerupSE();
+
+    powerup.icon.classList.add("active-powerup");
+    powerup.activate();
+}
+
+function DeactivatePowerup() {
+    activePowerup = false;
+    PlayPowerdownSE();
+
+    for (powerup of powerups) {
+        powerup.icon.classList.remove("active-powerup");
+    }
 }

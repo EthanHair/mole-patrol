@@ -40,6 +40,10 @@
 }
 
 .explosion {
+    background-position: 0 1120px;
+}
+
+.cork {
     background-position: 0 0;
 }
 
@@ -59,6 +63,10 @@
     cursor: none;
 }
 
+.golden-hammer {
+    background-position: 0 128px;
+}
+
 @keyframes whack {
     0% {
         rotate: -45deg;
@@ -73,4 +81,16 @@
 
 .end-score-text {
     font-size: large;
+}
+
+.active-powerup {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+#golden-hammer-icon, #cork-icon {
+    width: 64px;
+    height: 64px;
+    opacity: 0.4;
+    filter: grayscale(1);
 }
