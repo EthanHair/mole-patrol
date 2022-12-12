@@ -88,9 +88,13 @@
     filter: none !important;
 }
 
-#golden-hammer-icon, #cork-icon {
+#golden-hammer-icon, #cork-icon, #mult-icon {
     width: 64px;
     height: 64px;
     opacity: 0.4;
     filter: grayscale(1);
+}
+
+#powerup-timer {
+    height: 32px;
 }

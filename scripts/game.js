@@ -22,6 +22,8 @@ const startButton = document.getElementById("start-button");
 const homeBtn = document.getElementById("home-btn");
 const corkPowerUpIcon = document.getElementById("cork-icon");
 const goldenHammerPowerUpIcon = document.getElementById("golden-hammer-icon");
+const multiplierPowerUpIcon = document.getElementById("mult-icon");
+const powerupTimerElement = document.getElementById("powerup-timer");
 const whackSE = new Audio("audio/whack.wav");
 const jumpSE1 = new Audio("audio/jump1.wav");
 const jumpSE2 = new Audio("audio/jump2.wav");
@@ -57,6 +59,9 @@ let started = false;
 let selectedMode = "Medium";
 let goldenMolesHit = 0;
 let activePowerup = false;
+let scoreMultiplier = 1;
+let powerupTimer;
+let powerupTimeLeft;
 
 //#endregion
 
@@ -144,12 +149,12 @@ function ClickedHole(idx, override = false) {
 
             if (isGoldenMoleInHole[idx])
             {
-                score += 5;
+                score += 5 * scoreMultiplier;
                 ClickedGoldenMole(idx);
             }
             else
             {
-                score++;
+                score += 1 * scoreMultiplier;
                 ClickedMole(idx);
             }
             scoreElement.innerHTML = score;
@@ -638,6 +643,7 @@ function PlayRndJumpSE() {
 
 // PowerUps
 let corkPowerUp = function() {
+    let time = 10000;
 
     const numberOfCorkedHoles = getRndInteger(4,8);
     const corkedHoles = [];
@@ -658,7 +664,7 @@ let corkPowerUp = function() {
         availableHoles.splice(availableHoles.indexOf(idx), 1);
     }
 
-    setTimeout(() => {
+    let endPowerup = function() {
         for (idx of corkedHoles) {
             HideMole(idx);
     
@@ -668,34 +674,56 @@ let corkPowerUp = function() {
         }
 
         availableHoles = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    };
 
-        DeactivatePowerup();
-    }, 10000);
+    StartPowerUpTimer(time, endPowerup);
 };
 
 let goldenHammerPowerUp = function() {
+    let time = 15000;
+
     isGoldenHammer = true;
     hammerMouse.classList.add("golden-hammer");
 
-    setTimeout(() => {
+    let endPowerup = function() {
         isGoldenHammer = false;
         hammerMouse.classList.remove("golden-hammer");
+    };
 
-        DeactivatePowerup();
-    }, 10000);
+    StartPowerUpTimer(time, endPowerup);
+}
+
+let scoreMultiplierPowerUp = function() {
+    let time = 20000;
+
+    scoreMultiplier = 3;
+
+    let endPowerup = function() {
+        scoreMultiplier = 1;
+    };
+
+    StartPowerUpTimer(time, endPowerup);
 }
 
 const powerups = [{ icon: corkPowerUpIcon, activate: corkPowerUp }, 
-                  { icon: goldenHammerPowerUpIcon, activate: goldenHammerPowerUp }]
+                  { icon: goldenHammerPowerUpIcon, activate: goldenHammerPowerUp },
+                  { icon: multiplierPowerUpIcon, activate: scoreMultiplierPowerUp }]
 
-function ActivateRndPowerup() {
-    const powerup = powerups[getRndInteger(0, powerups.length)];
-
-    activePowerup = true;
-    PlayPowerupSE();
-
-    powerup.icon.classList.add("active-powerup");
-    powerup.activate();
+function ActivateRndPowerup(overrideIdx = -1) {
+    if (!activePowerup) {
+        let powerup;
+        if (overrideIdx == -1) {
+            powerup = powerups[getRndInteger(0, powerups.length)];
+        } else {
+            powerup = powerups[overrideIdx];
+        }
+    
+        activePowerup = true;
+        PlayPowerupSE();
+    
+        powerup.icon.classList.add("active-powerup");
+        powerup.activate();
+    }
 }
 
 function DeactivatePowerup() {
@@ -705,4 +733,22 @@ function DeactivatePowerup() {
     for (powerup of powerups) {
         powerup.icon.classList.remove("active-powerup");
     }
+}
+
+function StartPowerUpTimer(time, endPowerup) {
+    powerupTimeLeft = time / 1000;
+    powerupTimerElement.innerHTML = powerupTimeLeft;
+
+    powerupTimer = setInterval(() => {
+        powerupTimeLeft--;
+        if (powerupTimeLeft >= 1) {
+            powerupTimerElement.innerHTML = powerupTimeLeft;
+        }
+        else {
+            endPowerup();
+            DeactivatePowerup();
+            clearInterval(powerupTimer);
+            powerupTimerElement.innerHTML = "";
+        }
+    }, 1000);
 }
