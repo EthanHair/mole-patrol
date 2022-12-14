@@ -70,6 +70,10 @@ function Slow() {
     upTime = 1000;
     waitTime = 2000;
     hardMode = false;
+    goldenMolesHit = 0;
+    molesTillGolden = getRndInteger(10, 20);
+    molesTillBomb = getRndInteger(4, 8);
+
 
     selectedMode = "Slow";
 
@@ -88,6 +92,9 @@ function Medium() {
     upTime = 750;
     waitTime = 2000;
     hardMode = false;
+    goldenMolesHit = 0;
+    molesTillGolden = getRndInteger(10, 20);
+    molesTillBomb = getRndInteger(4, 8);
 
     selectedMode = "Medium";
 
@@ -106,6 +113,9 @@ function Fast() {
     upTime = 500;
     waitTime = 1000;
     hardMode = false;
+    goldenMolesHit = 0;
+    molesTillGolden = getRndInteger(10, 20);
+    molesTillBomb = getRndInteger(4, 8);
 
     selectedMode = "Fast";
 
